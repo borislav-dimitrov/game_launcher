@@ -10,6 +10,13 @@ class GameService:
         self._repo = repo
 
     # region GET
+    def _get_last_id(self):
+        result = 0
+        for item in self._repo._entities:
+            if int(item) > result:
+                result = int(item)
+        return result
+
     def find_all(self):
         return self._repo.get_all()
 
@@ -46,6 +53,9 @@ class GameService:
 
     def del_by_id(self, id_: int) -> Game | Exception:
         try:
+            if id_ == self._get_last_id():
+                self._repo._id -= 1
+
             return self._repo.del_by_id(id_)
         except Exception as ex:
             return ex

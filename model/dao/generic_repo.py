@@ -43,7 +43,6 @@ class GenericRepository(JsonOperations):
             return self._entities[id_]
         except Exception as ex:
             return ex
-
     # endregion
 
     # region CRUD
