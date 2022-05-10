@@ -55,8 +55,8 @@ class GameService:
         try:
             deleted = self._repo.del_by_id(id_)
 
-            self._repo._id = self._get_last_id()
-            print(self._get_last_id())
+            last_id = self._get_last_id()
+            self._repo._id = last_id
 
             return deleted
         except Exception as ex:
