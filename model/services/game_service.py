@@ -53,10 +53,12 @@ class GameService:
 
     def del_by_id(self, id_: int) -> Game | Exception:
         try:
-            if id_ == self._get_last_id():
-                self._repo._id -= 1
+            deleted = self._repo.del_by_id(id_)
 
-            return self._repo.del_by_id(id_)
+            self._repo._id = self._get_last_id()
+            print(self._get_last_id())
+
+            return deleted
         except Exception as ex:
             return ex
 
