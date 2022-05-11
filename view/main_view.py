@@ -26,8 +26,8 @@ class MainView(BaseView):
         self.background = self.canvas.create_image(resolution[0] / 2, 0, anchor="n", image=self.canvas_bg)
 
         # Header
-        self.header = self.canvas.create_text(resolution[0] / 2, 90, text="Games Launcher", fill="black",
-                                              font=self.heading)
+        # self.header = self.canvas.create_text(resolution[0] / 2, 90, text="Games Manager", fill="black",
+        #                                       font=self.heading)
 
         # Add Game
         self.add_btn_img = ImageTk.PhotoImage(gui_images.button("./resources/add_btn.png", 120, 65))
@@ -44,7 +44,7 @@ class MainView(BaseView):
         self.game_list_var = tk.StringVar(value=self.controller.get_info_for_lb_var())
         self.game_list = tk.Listbox(self.parent, listvariable=self.game_list_var, selectmode="extended", bd=0,
                                     selectbackground="black", takefocus=0)
-        self.game_list.configure(background="lightgray", font=self.header)
+        self.game_list.configure(background="lightgray", font=self.text_bold)
         self.game_list.grid(row=9, column=5, columnspan=20, rowspan=10, sticky="nsew")
 
         # Run
