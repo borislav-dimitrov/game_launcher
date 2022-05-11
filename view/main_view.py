@@ -1,8 +1,12 @@
-from tkinter import ttk
+from tkinter import ttk, PhotoImage
 import tkinter as tk
+
+import PIL
+from PIL import Image, ImageTk
 
 from controller.main_controller import MainController
 from view.base_view import BaseView
+from view.utils import gui_images
 
 
 class MainView(BaseView):
@@ -13,25 +17,42 @@ class MainView(BaseView):
         self.controller = controller
 
         # Draw GUI
-        self.header_lbl = ttk.Label(self.parent, text="Hello", font=self.text_bold, anchor="center")
-        self.header_lbl.grid(row=2, column=0, columnspan=self.cols, sticky="we")
+        self.canvas = tk.Canvas(self.parent, width=self.width, height=self.height)
+        self.canvas.configure(bg="lightgray")
+        self.canvas.grid(row=0, column=0, rowspan=self.rows, columnspan=self.cols)
+
+        # Background
+        self.canvas_bg = ImageTk.PhotoImage(gui_images.background("./resources/bg1.png", resolution))
+        self.background = self.canvas.create_image(resolution[0] / 2, 0, anchor="n", image=self.canvas_bg)
+
+        # Header
+        self.header = self.canvas.create_text(resolution[0] / 2, 90, text="Games Launcher", fill="black",
+                                              font=self.heading)
 
         # Add Game
-        self.add_game = ttk.Button(self.parent, text="ADD", command=lambda: self.controller.add_new_game())
-        self.add_game.grid(row=6, column=3, columnspan=7, rowspan=2, sticky="nsew")
+        self.add_btn_img = ImageTk.PhotoImage(gui_images.button("./resources/add_btn.png", 120, 65))
+        self.add_game = self.canvas.create_image(resolution[0] / 3, resolution[1] / 4, image=self.add_btn_img)
+        self.canvas.tag_bind(self.add_game, "<ButtonRelease-1>", lambda event: self.controller.add_new_game())
 
         # Rem Game
-        self.rem_game = ttk.Button(self.parent, text="REM", command=lambda: self.controller.rem_game())
-        self.rem_game.grid(row=6, column=19, columnspan=7, rowspan=2, sticky="nsew")
+        self.rem_btn_img = ImageTk.PhotoImage(gui_images.button("./resources/rem_btn.png", 120, 65))
+        self.rem_game = self.canvas.create_image(resolution[0] - (resolution[0] / 3), resolution[1] / 4,
+                                                 image=self.rem_btn_img)
+        self.canvas.tag_bind(self.rem_game, "<ButtonRelease-1>", lambda event: self.controller.rem_game())
 
         # Games List
         self.game_list_var = tk.StringVar(value=self.controller.get_info_for_lb_var())
-        self.game_list = tk.Listbox(self.parent, listvariable=self.game_list_var, selectmode="extended")
-        self.game_list.grid(row=9, column=3, columnspan=23, rowspan=10, sticky="nsew")
+        self.game_list = tk.Listbox(self.parent, listvariable=self.game_list_var, selectmode="extended", bd=0,
+                                    selectbackground="black", takefocus=0)
+        self.game_list.configure(background="lightgray", font=self.header)
+        self.game_list.grid(row=9, column=5, columnspan=20, rowspan=10, sticky="nsew")
 
         # Run
-        self.run_game = ttk.Button(self.parent, text="RUN", command=lambda: self.controller.run_game())
-        self.run_game.grid(row=20, column=7, columnspan=15, rowspan=2, sticky="nsew")
+        self.run_btn_img = ImageTk.PhotoImage(gui_images.button("./resources/run_btn.png", 250, 100))
+        self.run_game = self.canvas.create_image(resolution[0] / 2,
+                                                 resolution[1] - (resolution[1] / 3.5),
+                                                 image=self.run_btn_img)
+        self.canvas.tag_bind(self.run_game, "<ButtonRelease-1>", lambda event: self.controller.run_game())
 
     def refresh_games(self):
         self.game_list.delete(0, "end")

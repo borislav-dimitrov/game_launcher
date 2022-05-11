@@ -10,7 +10,7 @@ def main():
     main_controller.startup()
 
     root = tk.Tk()
-    main_view = MainView(root, "Game Launcher", main_controller, resolution=(540, 720), icon="./resources/icon.ico")
+    main_view = MainView(root, "Games Launcher", main_controller, resolution=(540, 720), icon="./resources/icon.ico")
     main_controller.view = main_view
     root.mainloop()
 

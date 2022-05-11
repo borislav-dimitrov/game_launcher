@@ -16,6 +16,9 @@ class BaseView:
         self.heading = ("Arial", 15, "bold")
         self.colors = {"BLUE": "#1C94CF", "RED": "#871313", "LRED": "#823030", "DRED": "#731616"}
 
+        # Set resize
+        self.parent.resizable(False, False)
+
         # Center window
         tkutil.center_window(self.parent, self.width, self.height)
 
