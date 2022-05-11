@@ -66,5 +66,6 @@ class MainController:
         game = self.service.get_by_id(int(lb_selection_id))
         if ".exe" in game.path:
             os.startfile(game.path)
+            quit(0)
         else:
             messagebox.showerror("Error!", "Not a valid game path!")
