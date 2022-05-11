@@ -1,1 +1,2 @@
-game_launcher\venv\Scripts\activate.bat & cls & python main.py
+call venv\Scripts\python.exe main.py
+pause
